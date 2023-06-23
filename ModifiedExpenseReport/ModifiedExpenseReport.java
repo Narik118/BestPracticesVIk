@@ -1,6 +1,5 @@
 package ModifiedExpenseReport;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,21 +11,28 @@ class Expense {
     private ExpenseType type;
     private int amount;
 
-    public ExpenseType getType() {
-        return type;
+    public Expense(ExpenseType type, int amount){
+        this.type = type;
+        this.amount = amount;
     }
 
-    public void setType(ExpenseType type) {
-        this.type = type;
+    public ExpenseType getType() {
+        return type;
     }
 
     public int getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public boolean DinnerOverThreshold(){
+        boolean IsOverThreshold = type == ExpenseType.DINNER && amount > 5000 ? true : false;
+        return IsOverThreshold;
     }
+    public boolean BreakfastOverThreshold(){
+        boolean IsOverThreshold = type == ExpenseType.BREAKFAST && amount > 1000 ? true : false;
+        return IsOverThreshold;
+    }
+
 }
 
 public class ModifiedExpenseReport {
@@ -72,31 +78,30 @@ public class ModifiedExpenseReport {
     }
 
     public String getMealOverExpensesMarker(Expense expense) {
-        boolean isDinner = expense.getType() == ExpenseType.DINNER;
-        boolean isBreakfast = expense.getType() == ExpenseType.BREAKFAST;
-        boolean isOverThreshold = (isDinner && expense.getAmount() > 5000) || (isBreakfast && expense.getAmount() > 1000);
-
+       // boolean isDinner = expense.getType() == ExpenseType.DINNER;
+       // boolean isBreakfast = expense.getType() == ExpenseType.BREAKFAST;
+        boolean isOverThreshold = (expense.DinnerOverThreshold()) || (expense.BreakfastOverThreshold());
         return isOverThreshold ? "X" : " ";
     }
 
-    public static void main(String[] args) {
-        List<Expense> expenses = new ArrayList<>();
+//    public static void main(String[] args) {
+//        List<Expense> expenses = new ArrayList<>();
+//
+//        Expense dinnerExpense = new Expense();
+//        dinnerExpense.setType(ExpenseType.DINNER);
+//        dinnerExpense.setAmount(7000);
+//        expenses.add(dinnerExpense);
+//
+//        Expense breakfastExpense = new Expense();
+//        breakfastExpense.setType(ExpenseType.BREAKFAST);
+//        breakfastExpense.setAmount(1000);
+//        expenses.add(breakfastExpense);
+//
+//        Expense carRentalExpense = new Expense();
+//        carRentalExpense.setType(ExpenseType.CAR_RENTAL);
+//        carRentalExpense.setAmount(4500);
+//        expenses.add(carRentalExpense);
 
-        Expense dinnerExpense = new Expense();
-        dinnerExpense.setType(ExpenseType.DINNER);
-        dinnerExpense.setAmount(7000);
-        expenses.add(dinnerExpense);
-
-        Expense breakfastExpense = new Expense();
-        breakfastExpense.setType(ExpenseType.BREAKFAST);
-        breakfastExpense.setAmount(1000);
-        expenses.add(breakfastExpense);
-
-        Expense carRentalExpense = new Expense();
-        carRentalExpense.setType(ExpenseType.CAR_RENTAL);
-        carRentalExpense.setAmount(4500);
-        expenses.add(carRentalExpense);
-
-        new ModifiedExpenseReport().printReport(expenses);
-    }
+//        new ModifiedExpenseReport().printReport(expenses);
+//    }
 }
