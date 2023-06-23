@@ -8,8 +8,8 @@ enum ExpenseType {
 }
 
 class Expense {
-    private ExpenseType type;
-    private int amount;
+    final ExpenseType type;
+    final int amount;
 
     public Expense(ExpenseType type, int amount){
         this.type = type;
@@ -25,12 +25,10 @@ class Expense {
     }
 
     public boolean DinnerOverThreshold(){
-        boolean IsOverThreshold = type == ExpenseType.DINNER && amount > 5000 ? true : false;
-        return IsOverThreshold;
+        return type == ExpenseType.DINNER && amount > 5000 ? true : false;
     }
     public boolean BreakfastOverThreshold(){
-        boolean IsOverThreshold = type == ExpenseType.BREAKFAST && amount > 1000 ? true : false;
-        return IsOverThreshold;
+        return type == ExpenseType.BREAKFAST && amount > 1000 ? true : false;
     }
 
 }
@@ -65,16 +63,12 @@ public class ModifiedExpenseReport {
     }
 
     public String getExpenseName(ExpenseType expenseType) {
-        switch (expenseType) {
-            case DINNER:
-                return "Dinner";
-            case BREAKFAST:
-                return "Breakfast";
-            case CAR_RENTAL:
-                return "Car Rental";
-            default:
-                return "";
-        }
+        return switch (expenseType) {
+            case DINNER -> "Dinner";
+            case BREAKFAST -> "Breakfast";
+            case CAR_RENTAL -> "Car Rental";
+            default -> "";
+        };
     }
 
     public String getMealOverExpensesMarker(Expense expense) {
